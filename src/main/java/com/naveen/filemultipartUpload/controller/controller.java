@@ -60,8 +60,6 @@ public class controller {
         //System.out.println("File Content:\n" + new String(bytes));
 
         return (new ResponseEntity<>("Successful", null, HttpStatus.OK));
-	
-	
 		
 	}
 	
@@ -70,15 +68,27 @@ public class controller {
 
 	        for (MultipartFile file : files) {
 	            byte[] bytes = file.getBytes();
-
+	            
+	            
 	            System.out.println("File Name: " + file.getOriginalFilename());
 	            System.out.println("File Content Type: " + file.getContentType());
-	           // System.out.println("File Content:\n" + new String(bytes));
+	            
+	            if(!file.getContentType().contains(".exe")||file.getContentType().contains(".jar")||file.getContentType().contains(".js")||file.getContentType().contains(".py"))
+	            {
+	            	System.out.println( "File uplaoded is safe : "+file.getOriginalFilename( ));
+	            	//return (new ResponseEntity<>("Successful", null, HttpStatus.OK));
+	            	
+	            }
+	            
+	            else
+	            {
+	            	return (new ResponseEntity<>("Failed,Because files uplaoded are not safe", null, HttpStatus.BAD_REQUEST));
+	            }
+	            
+	            //System.out.println("File Content:\n" + new String(bytes));
 	        }
 
 	        return (new ResponseEntity<>("Successful", null, HttpStatus.OK));
 	    }
-	
-	
 	
 }
